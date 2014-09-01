@@ -1,0 +1,26 @@
+{
+  "name": "notice",
+  "version": "0.0.0",
+  "description": "notice board",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/slashdotdash/notice.git"
+  },
+  "author": "Ben Smith <ben@10consulting.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/slashdotdash/notice/issues"
+  },
+  "homepage": "https://github.com/slashdotdash/notice",
+  "devDependencies": {
+    "gulp": "~3.8.7",
+    "gulp-esnext": "~1.0.1",
+    "gulp-concat": "~2.3.4",
+    "gulp-uglify": "~0.3.1",
+    "gulp-sourcemaps": "~1.1.1"
+  }
+}
