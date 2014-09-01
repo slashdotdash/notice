@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+  <meta charset="UTF-8">
+  <title>notice</title>
+</head>
+<body ng-controller="BoardController as ctrl">
+  <h1>notice</h1>
+  
+  <div ng-repeat="board in ctrl.boards" class="board">
+  	<header>{{board.name}}</header>
+  </div>
+
+  <script src="dist/vendor.js"></script>
+  <script src="dist/app.js"></script>
+</body>
+</html>
