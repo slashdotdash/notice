@@ -1,14 +1,26 @@
 var gulp = require('gulp');
+var gutil = require('gulp-util');
 var concat = require('gulp-concat');
 var esnext = require('gulp-esnext');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 var jshint = require('gulp-jshint');
+var less = require('gulp-less');
+
+var paths = {
+  scripts: 'src/js/**/*.js',
+  styles:  'src/less/**/*.less'
+};
+
+function handleError(error) {
+  gutil.beep();
+  gutil.log(error);
+  this.emit('end');
+}
 
 gulp.task('js', function() {
-  return gulp.src(['src/app.js', 'src/**/*.module.js', 'src/**/*.js'])
+  return gulp.src(['src/js/app.js', 'src/js/**/*.module.js', paths.scripts])
     .pipe(sourcemaps.init())
-    .pipe(concat('app.js'))
     .pipe(esnext({
       arrowFunction:      true,
       class:              false,
@@ -21,7 +33,8 @@ gulp.task('js', function() {
       arrayComprehensions: false
     }))
     .pipe(uglify())
-    .pipe(sourcemaps.write())
+    .pipe(concat('app.js'))
+    .pipe(sourcemaps.write('maps'))
     .pipe(gulp.dest('dist'));
 });
 
@@ -30,20 +43,30 @@ gulp.task('vendor', function() {
       'bower_components/angular/angular.js'
     ])
     .pipe(sourcemaps.init())
-    .pipe(concat('vendor.js'))
     .pipe(uglify())
-    .pipe(sourcemaps.write())
+    .pipe(concat('vendor.js'))
+    .pipe(sourcemaps.write('maps'))
     .pipe(gulp.dest('dist'));
 });
 
 gulp.task('lint', function() {
-  return gulp.src('src/**/*.js')
+  return gulp.src(paths.scripts)
     .pipe(jshint())
     .pipe(jshint.reporter('default'));
 });
 
-gulp.task('watch', function () {
-  gulp.watch('src/**/*.js', ['js']);
+gulp.task('less', function() {
+  return gulp.src(paths.styles)
+    .pipe(sourcemaps.init())
+    .pipe(less())
+    .on('error', handleError)
+    .pipe(sourcemaps.write('maps'))
+    .pipe(gulp.dest('dist'));
 });
 
-gulp.task('default', ['js']);
+gulp.task('watch', function() {
+  gulp.watch(paths.scripts, ['js']);
+  gulp.watch(paths.styles, ['less']);
+});
+
+gulp.task('default', ['lint', 'vendor', 'js']);
