@@ -8,10 +8,12 @@ var jshint = require('gulp-jshint');
 var less = require('gulp-less');
 var prefix = require('gulp-autoprefixer');
 var express = require('express');
+var templates = require('gulp-angular-templatecache');
 
 var paths = {
-  scripts: 'src/js/**/*.js',
-  styles:  'src/less/**/*.less'
+  scripts:    'src/js/**/*.js',
+  templates:  'src/js/**/templates/*.html',
+  styles:     'src/less/**/*.less'
 };
 
 function handleError(error) {
@@ -38,6 +40,15 @@ gulp.task('scripts', function() {
     .pipe(uglify())
     .pipe(concat('app.js'))
     .pipe(sourcemaps.write('maps'))
+    .pipe(gulp.dest('dist'));
+});
+
+gulp.task('templates', function() {
+  return gulp.src(paths.templates)
+    .pipe(templates({
+      module: 'app.templates',
+      standalone: true
+    }))
     .pipe(gulp.dest('dist'));
 });
 
@@ -71,6 +82,7 @@ gulp.task('styles', function() {
 
 gulp.task('watch', function() {
   gulp.watch(paths.scripts, ['scripts']);
+  gulp.watch(paths.templates, ['templates']);
   gulp.watch(paths.styles, ['styles']);
 });
 
@@ -82,6 +94,6 @@ gulp.task('serve', function() {
   app.listen(3000);
 });
 
-gulp.task('build', ['vendor', 'scripts', 'styles']);
+gulp.task('build', ['vendor', 'scripts', 'templates', 'styles']);
 
 gulp.task('default', ['lint', 'build', 'serve', 'watch']);
