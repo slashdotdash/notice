@@ -13,3 +13,9 @@
 ## Resources
 
 - [What is a kanban board?](http://leankit.com/kanban/kanban-board/)
+
+### Inspiration
+
+- [Trello](https://trello.com/)
+- [waffle.io](https://waffle.io/waffleio/waffle.io)
+- [LeanKit](http://leankit.com/kanban/kanban-board/)

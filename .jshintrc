@@ -27,6 +27,8 @@
     "maxcomplexity" : false,    // {int} Max cyclomatic complexity per function
     "maxlen"        : false,    // {int} Max number of characters per line
 
+    "esnext"        : true,
+
     // Environments
     "browser"       : true,     // Web Browser (window, document, etc)
 	"node"          : true,     // Node.js

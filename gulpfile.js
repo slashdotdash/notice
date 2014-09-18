@@ -6,6 +6,8 @@ var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 var jshint = require('gulp-jshint');
 var less = require('gulp-less');
+var prefix = require('gulp-autoprefixer');
+var express = require('express');
 
 var paths = {
   scripts: 'src/js/**/*.js',
@@ -18,8 +20,8 @@ function handleError(error) {
   this.emit('end');
 }
 
-gulp.task('js', function() {
-  return gulp.src(['src/js/app.js', 'src/js/**/*.module.js', paths.scripts])
+gulp.task('scripts', function() {
+  return gulp.src(['src/js/vendor/**/*.js', 'src/js/app.js', 'src/js/**/*-module.js', paths.scripts])
     .pipe(sourcemaps.init())
     .pipe(esnext({
       arrowFunction:      true,
@@ -32,6 +34,7 @@ gulp.task('js', function() {
       includeRuntime:     false,
       arrayComprehensions: false
     }))
+    .on('error', handleError)
     .pipe(uglify())
     .pipe(concat('app.js'))
     .pipe(sourcemaps.write('maps'))
@@ -40,7 +43,8 @@ gulp.task('js', function() {
 
 gulp.task('vendor', function() {
   return gulp.src([
-      'bower_components/angular/angular.js'
+      'bower_components/angular/angular.js',
+      'bower_components/lodash/dist/lodash.js'
     ])
     .pipe(sourcemaps.init())
     .pipe(uglify())
@@ -55,18 +59,29 @@ gulp.task('lint', function() {
     .pipe(jshint.reporter('default'));
 });
 
-gulp.task('less', function() {
+gulp.task('styles', function() {
   return gulp.src(paths.styles)
     .pipe(sourcemaps.init())
     .pipe(less())
     .on('error', handleError)
+    .pipe(prefix())
     .pipe(sourcemaps.write('maps'))
     .pipe(gulp.dest('dist'));
 });
 
 gulp.task('watch', function() {
-  gulp.watch(paths.scripts, ['js']);
-  gulp.watch(paths.styles, ['less']);
+  gulp.watch(paths.scripts, ['scripts']);
+  gulp.watch(paths.styles, ['styles']);
 });
 
-gulp.task('default', ['lint', 'vendor', 'js']);
+gulp.task('serve', function() {
+  var app = express();
+
+  app.use(express.static('.'));
+
+  app.listen(3000);
+});
+
+gulp.task('build', ['vendor', 'scripts', 'styles']);
+
+gulp.task('default', ['lint', 'build', 'serve', 'watch']);
