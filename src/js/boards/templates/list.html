@@ -1,0 +1,12 @@
+<header>{{list.title}}</header>
+
+<div class="cards">
+	<div ng-repeat="card in list.cards track by card.id" class="card">
+		<header>{{card.title}}</header>
+		<p>{{card.description}}</p>
+	</div>
+
+	<p><a href="" ng-click="ctrl.addItemToList = list">Add a card &hellip;</a></p>
+
+	<div class="create-card" ng-show="ctrl.addItemToList == list" ng-include="'boards/templates/create-card.html'"></div>
+</div>

@@ -4,15 +4,6 @@
 
 <div class="board-content">
   <div class="lists">
-    <div ng-repeat="list in ctrl.lists track by list.id" class="list">
-    	<header>{{list.title}}</header>
-
-      <div class="cards">
-      	<div ng-repeat="card in list.cards track by card.id" class="card">
-      		<header>{{card.title}}</header>
-      		<p>{{card.description}}</p>
-      	</div>
-      </div>
-    </div>
+    <div ng-repeat="list in ctrl.lists track by list.id" class="list" ng-include="'boards/templates/list.html'"></div>
   </div>
 </div>
