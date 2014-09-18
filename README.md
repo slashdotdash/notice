@@ -12,8 +12,6 @@ Collaboration noticeboard tool for visualising work and workflow, kanban style.
 - [waffle.io](https://waffle.io/waffleio/waffle.io)
 - [LeanKit](http://leankit.com/kanban/kanban-board/)
 
---
-
 ## Getting started
 
 Uses npm for tooling, Bower for third party dependencies and Gulp as the build tool.
