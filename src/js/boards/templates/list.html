@@ -6,7 +6,7 @@
 		<p>{{card.description}}</p>
 	</div>
 
-	<p><a href="" ng-click="ctrl.addItemToList = list">Add a card &hellip;</a></p>
+	<p><a href="" ng-click="ctrl.addItemToList = list" ng-show="ctrl.addItemToList !== list">Add a card &hellip;</a></p>
 
-	<div class="create-card" ng-show="ctrl.addItemToList == list" ng-include="'boards/templates/create-card.html'"></div>
+	<div class="create-card" ng-show="ctrl.addItemToList === list" ng-include="'boards/templates/create-card.html'"></div>
 </div>

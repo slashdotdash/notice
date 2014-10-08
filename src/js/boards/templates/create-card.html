@@ -1,5 +1,5 @@
-<form ng-submit="ctrl.addCard()">
-	<input type="text" ng-model="ctrl.card.title">
-	<input type="password" ng-model="ctrl.card.description">
-	<input type="submit" value="Add">
+<form ng-submit="ctrl.addCard()" name="createCard">
+	<input type="text" ng-model="ctrl.card.title" required ng-minlength="1">
+	<input type="submit" value="Add" ng-disabled="createCard.$invalid">
+	or <a href="" ng-click="ctrl.addItemToList = null">cancel</a>
 </form>

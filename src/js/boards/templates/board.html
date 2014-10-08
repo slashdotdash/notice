@@ -1,9 +1,9 @@
 <header>
-  <h1>{{ctrl.title}}</h1>
+  <h1>{{ctrl.board.title}}</h1>
 </header>
 
 <div class="board-content">
   <div class="lists">
-    <div ng-repeat="list in ctrl.lists track by list.id" class="list" ng-include="'boards/templates/list.html'"></div>
+    <div ng-repeat="list in ctrl.board.lists track by list.id" class="list" ng-include="'boards/templates/list.html'"></div>
   </div>
 </div>

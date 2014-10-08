@@ -24,14 +24,32 @@ angular.module('app.boards')
           { id: 3, title: 'Done', cards: [] }
         ]
       }
-    ];    
-    
+    ];
+
     return {
       // get the default board
       default: () => {
         var deferred = $q.defer();
 
         deferred.resolve(_.find(boards, board => !!board.default) || _.first(boards));
+
+        return deferred.promise;
+      },
+
+      addCardToList: (list, title) => {
+        var deferred = $q.defer();
+        var cards = list.cards;
+        var id = Math.max(0, _.chain(cards).map(c => c.id).max().value()) + 1;
+
+        var card = {
+          id: id,
+          title: title,
+          description: ''
+        };
+
+        cards.push(card);
+
+        deferred.resolve(card);
 
         return deferred.promise;
       }

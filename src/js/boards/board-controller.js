@@ -1,11 +1,17 @@
 angular.module('app.boards')
   .controller('BoardController', ['BoardService', function(BoardService) {
-    this.title = '';
-    this.lists = [];
+    this.board = null;
+    this.addItemToList = null;
+
+    this.addCard = () => {
+      BoardService.addCardToList(this.addItemToList, this.card.title)
+        .then(() => {
+          this.card = null;
+        });      
+    };
 
     BoardService.default()
-      .then((board) => {
-        this.title = board.title;
-        this.lists = board.lists;
+      .then(board => {
+        this.board = board;
       });
   }]);
